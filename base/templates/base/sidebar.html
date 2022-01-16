@@ -1,0 +1,135 @@
+<div class="menuMobile">
+  <div class="menuMobileStale">
+    <div class="przycisk3linieOrazX">
+      <div class="linia1"></div>
+      <div class="linia2"></div>
+      <div class="linia3"></div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="witaj">
+      <div>Witaj, {{request.user}}</div>
+      <div>
+        <a href="{% url 'logout' %}">Wyloguj</a>
+      </div>
+    </div>
+    {% else %}
+    <div class="witaj">
+      <div>
+        <a href="{% url 'index' %}">Strona główna</a>
+      </div>
+      <div>
+        <a href="{% url 'login' %}">Zaloguj</a>
+      </div>
+      <div>
+        <a href="{% url 'register' %}">Zarejestruj się</a>
+      </div>
+    </div>
+
+    {% endif %}
+  </div>
+
+  <div class="menuMobileZmienne">
+    <div class="lewegorne">
+      {% if user.is_authenticated %}
+      <div class="ustawienia">
+        <!-- // -->
+        {% comment %}
+        <div class="tlo">
+          Tło
+          <label class="toggletlo" for="myToggletlo">
+            <input
+              class="toggle__inputtlo"
+              name=""
+              type="checkbox"
+              id="myToggletlo"
+            />
+            <div class="toggle__filltlo"></div>
+          </label>
+        </div>
+        {% endcomment %}
+
+        <div class="ekranpowitalny">
+          Ekran powitalny
+          <label class="toggle" for="myToggle">
+            <input
+              class="toggle__input"
+              name=""
+              type="checkbox"
+              id="myToggle"
+            />
+            <div class="toggle__fill"></div>
+          </label>
+        </div>
+
+        <div class="wyswietlzysk">
+          Wyświetl zysk
+          <label class="togglezysk" for="myTogglezysk">
+            <input
+              class="toggle__inputzysk"
+              name=""
+              type="checkbox"
+              id="myTogglezysk"
+            />
+            <div class="toggle__fillzysk"></div>
+          </label>
+        </div>
+      </div>
+      <!-- // -->
+      {% endif %} {% if not user.is_authenticated %}
+
+      <div class="najpopularniejszemobile">Najpopularniejsze</div>
+      {% endif %}
+    </div>
+
+    <div class="lewedolne">
+      <hr />
+      <div style="color: rgb(170, 170, 170)">Najpopularniejsze</div>
+
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">EURO/USD</div>
+        <div class="najpopularniejszeKwota eurousd">1,00</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">PLN/USD</div>
+        <div class="najpopularniejszeKwota plnusd">1,00</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">PLN/EURO</div>
+        <div class="najpopularniejszeKwota plneuro">1,00</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">PLN/GBP</div>
+        <div class="najpopularniejszeKwota plngbp">1,00</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">CD Projekt</div>
+        <div class="najpopularniejszeKwota cdprojekt">{{cdprojekt}} zł</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">Tesla</div>
+        <div class="najpopularniejszeKwota tesla">{{tesla.price}} $</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">Amazon</div>
+        <div class="najpopularniejszeKwota amazon">{{amazon.price}} $</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">Netflix</div>
+        <div class="najpopularniejszeKwota netflix">{{netflix.price}} $</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">SP500</div>
+        <div class="najpopularniejszeKwota sp500">{{sp500.price}} $</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">WIG20</div>
+        <div class="najpopularniejszeKwota wig20">{{wig20}} zł</div>
+      </div>
+      <div class="najpopularniejsze">
+        <div class="najpopularniejszeNazwa">Bitcoin</div>
+        <div class="najpopularniejszeKwota bitcoin">1,00</div>
+      </div>
+    </div>
+  </div>
+</div>

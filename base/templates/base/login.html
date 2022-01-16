@@ -1,0 +1,78 @@
+{% extends 'base/main.html' %} {% block praweGlowne %}
+
+<div class="box-login">
+  <span></span>
+  
+
+  <div class="box-login-main-content">
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-login-main-left-right">
+        <div class="box-login-left-side">
+          <div class="b-l-lg1">Zaloguj się</div>
+          <div class="b-l-lg2">
+            <input
+              type="text"
+              name="username"
+              placeholder="Nazwa użytkownika"
+            />
+          </div>
+        </div>
+
+        <div class="box-login-right-side">
+          <div class="b-l-pg1">:</div>
+          <div class="b-l-pg2">
+            <input type="password" name="password" placeholder="Hasło" />
+          </div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Login"
+        value="Loguję"
+        class="box-login-confirm-button"
+      /><br>
+      {% comment %} <a href="{% url 'reset_password'%}" style="color:white;"> Przypomnij hasło </a><br><br> {% endcomment %}
+    </form>
+  </div>
+</div>
+
+<div class="box-login-mobile">
+  <span></span>
+    <div class="box-login-mobile-main-content">
+
+      <div class="box-login-mobile-go-back">
+       <div><a href="{% url 'index' %}"> Powrót </a></div>
+      </div>
+
+      <form method="POST" action="">
+        {% csrf_token %}
+        <div class="box-login-mobile-main-left-right">
+          <div class="box-login-mobile-left-side">
+            <div class="b-l-m-lg1">Zaloguj się:</div>
+            <div class="b-l-m-lg2">
+              <input
+                type="text"
+                name="username"
+                placeholder="Nazwa użytkownika"
+              />
+            </div>
+            <div class="b-l-m-pg2">
+              <input type="password" name="password" placeholder="Hasło" />
+            </div>
+            
+            <input
+              type="submit"
+              name="Login"
+              value="Loguję"
+              class="box-login-mobile-confirm-button"
+            />
+            
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% endblock praweGlowne %}
+</div>

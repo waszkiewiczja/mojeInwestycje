@@ -1,0 +1,7 @@
+{% extends 'base/main.html' %} {% block praweGlowne %}
+<p style="color: white; font-size: 2rem">
+  {% for stock in all_stocks%} {{stock.name}} -- {{stock.price}}
+  <br />
+  {%endfor%}
+</p>
+{%endblock praweGlowne%}

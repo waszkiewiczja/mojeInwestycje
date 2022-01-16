@@ -1,0 +1,255 @@
+{% extends 'base/main.html' %} {% block praweGlowne %} {% comment %} Box
+powitalny {% endcomment %}
+<div class="box-welcome">
+  <span></span>
+  <span id="anonimo">{{anonimo}}</span>
+  <div class="box-welcome-main-content">
+    <div class="welcome-main-left-right">
+      <div class="welcome-left-side">
+        Obserwuj 1 270 Inwestycji w Jednym Miejscu
+      </div>
+      <div class="welcome-right-side">
+        <div class="welcome-right-side-header">
+          Sprawdź Teslę, Netflix, Amazon, CD Projekt i inne
+        </div>
+        <div class="welcome-right-side-subheader">
+          Waluty Indeksy Surowce Akcje Bitcoin Krypto
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} Box dodaj inwestycje {% endcomment %} {% comment %} Dla
+zalogowanych {% endcomment %} {% if user.is_authenticated%}
+<div class="box-add">
+  <span></span>
+  <div class="content">
+    <button class="btn-add-investment">Dodaj inwestycje</button>
+
+    <div class="box-add-main-left-right">
+      <div class="left-side-in-box-add">
+        <div class="select-box2">
+          <div class="options-container2">
+            <div class="option2">
+              <input type="radio" class="radio" id="Zloto" name="category" />
+              <label for="Złoto">Złoto</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="akcje" name="category" />
+              <label for="akcje">Akcje</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="waluty" name="category" />
+              <label for="waluty">Waluty</label>
+            </div>
+
+            <div class="option2">
+              <input
+                type="radio"
+                class="radio"
+                id="kryptowaluty"
+                name="category"
+              />
+              <label for="kryptowaluty">Kryptowaluty</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="indeksy" name="category" />
+              <label for="indeksy">Indeksy</label>
+            </div>
+
+            <div class="option2">
+              <input
+                type="radio"
+                class="radio"
+                id="newconnect"
+                name="category"
+              />
+              <label for="newconnect">New Connect</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="topusa" name="category" />
+              <label for="topusa">TOP 100 USA</label>
+            </div>
+
+            {% comment %}
+            <div class="option2">
+              <input type="radio" class="radio" id="inne" name="category" />
+              <label for="inne">Inne</label>
+            </div>
+            {% endcomment %}
+          </div>
+
+          <div class="selected2">Wybierz...</div>
+        </div>
+      </div>
+
+      <!-- // -->
+      <div class="right-side-in-box-add">
+        <div class="select-box">
+          <div class="options-container"></div>
+
+          <div class="selected">Szczegóły...</div>
+
+          <div class="search-box">
+            <input type="text" placeholder="Szukaj..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form method="POST" action="/">
+      {% csrf_token %}
+      <div class="formtitle">{{form.title}} {{form.rodzajInw}}</div>
+      <button
+        type="submit"
+        class="btn-investment-confirmation"
+        id="potwiedzenieInwest"
+      >
+        Dodaj do obserwowanych
+      </button>
+    </form>
+  </div>
+</div>
+{%endif%} {% comment %} Dla niezalogowanych fff prettier 123456 {% endcomment %}
+{% if not user.is_authenticated%}
+<div class="box-add">
+  <span></span>
+  <div class="content">
+    <button class="btn-add-investment">Dodaj inwestycje</button>
+
+    <div class="box-add-main-left-right">
+      <div class="left-side-in-box-add">
+        <div class="select-box2">
+          <div class="options-container2">
+            <div class="option2">
+              <input type="radio" class="radio" id="Zloto" name="category" />
+              <label for="Złoto">Złoto</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="akcje" name="category" />
+              <label for="akcje">Akcje</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="waluty" name="category" />
+              <label for="waluty">Waluty</label>
+            </div>
+
+            <div class="option2">
+              <input
+                type="radio"
+                class="radio"
+                id="kryptowaluty"
+                name="category"
+              />
+              <label for="kryptowaluty">Kryptowaluty</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="indeksy" name="category" />
+              <label for="kryptowaluty">Indeksy</label>
+            </div>
+
+            <div class="option2">
+              <input
+                type="radio"
+                class="radio"
+                id="newconnect"
+                name="category"
+              />
+              <label for="newconnect">New Connect</label>
+            </div>
+
+            <div class="option2">
+              <input type="radio" class="radio" id="topusa" name="category" />
+              <label for="topusa">TOP 100 USA</label>
+            </div>
+
+            {% comment %}
+            <div class="option2">
+              <input type="radio" class="radio" id="inne" name="category" />
+              <label for="inne">Inne</label>
+            </div>
+            {% endcomment %}
+          </div>
+
+          <div class="selected2">Wybierz...</div>
+        </div>
+      </div>
+
+      <!-- // -->
+      <div class="right-side-in-box-add">
+        <div class="select-box">
+          <div class="options-container"></div>
+
+          <div class="selected">Szczegóły...</div>
+
+          <div class="search-box">
+            <input type="text" placeholder="Szukaj..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formtitle">{{form.title}} {{form.rodzajInw}}</div>
+    <button type="" class="btn-investment-confirmation" id="potwiedzenieJS">
+      Sprawdź kurs
+    </button>
+  </div>
+</div>
+{%endif%}
+
+<!-- // -->
+
+{% for task in tasks %}
+<div class="box-new">
+  <span></span>
+  <div class="przyciskUsun2" title="Usuń">
+    <a href="{% url 'delete' task.slug %}">X</a>
+  </div>
+  <div class="przyciskSzczegoly2" title="Szczegóły Inwestycji">
+    <a href="{% url 'update_task' task.slug %}">+</a>
+  </div>
+  <div class="box-new-main-content">
+    <div class="box-new-main-left-right">
+      <div class="box-new-main-left-side">
+        <div class="lewy1">{{task}}</div>
+        <div class="lewy11">{{task.rodzajInw}}</div>
+        <div class="lewy2"></div>
+        <div class="lewy3">
+          <div class="datazakupu">
+            <p>Data zakupu</p>
+            <p>{{task.dataZakupu}}</p>
+          </div>
+          <div class="ilosczakupu">
+            <p>Ilosść</p>
+            <p class="ilosczakupup">{{task.iloscZakupu}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="box-new-main-right-side">
+        <div class="prawy1">{{task.price}} zł</div>
+        <div class="prawy11"></div>
+        <div class="prawy2"></div>
+        <div class="prawy3">
+          <div class="cenazakupu">
+            <p>Cena zakupu</p>
+            <p class="cenazakupup">{{task.cenaZakupu}}</p>
+          </div>
+          <div class="zyskzakupu">
+            <p>Zysk</p>
+            <p class="zyskzakupup"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %} {% endblock praweGlowne %}

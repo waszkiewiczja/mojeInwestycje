@@ -1,0 +1,64 @@
+{% extends 'base/main.html' %} {% block praweGlowne %} {% comment %} Desktop
+version {% endcomment %}
+<div class="box-login">
+  <span></span>
+  <div class="box-login-main-content">
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-login-main-left-right">
+        <div class="box-login-left-side">
+          <div class="b-l-lg1">Zarejestruj się</div>
+          <div class="b-l-lg2">Nazwa użytkownika</div>
+          <div class="b-l-lg2">Email</div>
+          <div class="b-l-lg2">Hasło</div>
+          <div class="b-l-lg2">Powtórz hasło</div>
+        </div>
+
+        <div class="box-login-right-side">
+          <div class="b-l-pg1">:</div>
+          <div class="b-l-pg2">{{form.username}}</div>
+          <div class="b-l-pg2">{{form.email}}</div>
+          <div class="b-l-pg2">{{form.password1}}</div>
+          <div class="b-l-pg2">{{form.password2}}</div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Login"
+        value="Zarejestruj mnie"
+        class="box-login-confirm-button"
+      />
+    </form>
+  </div>
+</div>
+
+{% comment %} Mobile version {% endcomment %}
+<div class="box-login-mobile">
+  <span></span>
+  <div class="box-login-mobile-main-content">
+    <div class="box-login-mobile-go-back">
+      <div><a href="{% url 'index' %}"> Powrót </a></div>
+    </div>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-login-mobile-main-left-right">
+        <div class="box-login-mobile-left-side">
+          <div class="b-l-m-lg1">Zarejestruj się:</div>
+          <div class="b-l-m-lg2">Nazwa użytkownika {{form.username}}<br /></div>
+          <div class="b-l-m-lg2">Email {{form.email}}</div>
+          <div class="b-l-m-lg2">Hasło {{form.password1}}</div>
+          <div class="b-l-m-lg2">Powtórz hasło {{form.password2}}</div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Login"
+        value="Zarejestruj mnie"
+        class="box-login-mobile-confirm-button"
+      />
+    </form>
+  </div>
+</div>
+
+{% comment %} {{form.errors}} {%endcomment%} {% endblock praweGlowne %}

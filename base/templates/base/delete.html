@@ -1,0 +1,56 @@
+{% extends 'base/main.html' %} {% block praweGlowne %}
+
+<div class="box-delete">
+  <span></span>
+  <div class="box-delete-main-content">
+    <div class="box-delete-go-back">
+      <div><a href="{% url 'index' %}"> Powrót </a></div>
+    </div>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-delete-main-left-right">
+        <div class="box-delete-left-side">
+          <div class="b-d-lg1">Chcesz skasować</div>
+        </div>
+
+        <div class="box-delete-right-side">
+          <div class="b-d-pg1">'{{item}}' ?</div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Confirm"
+        value="Potwierdź skasowanie"
+        class="box-delete-confirm-button"
+      />
+    </form>
+  </div>
+</div>
+
+{% comment %} Mobile version {% endcomment %}
+<div class="box-delete-mobile">
+  <span></span>
+  <div class="box-delete-mobile-main-content">
+    <div class="box-delete-mobile-go-back">
+      <div><a href="{% url 'index' %}"> Powrót </a></div>
+    </div>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-delete-mobile-main-left-right">
+        <div class="box-delete-mobile-left-side">
+          <div class="b-d-m-lg1">Chcesz skasować</div>
+          <div class="b-d-m-pg1">'{{item}}' ?</div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Confirm"
+        value="Potwierdź skasowanie"
+        class="box-delete-mobile-confirm-button"
+      />
+    </form>
+  </div>
+</div>
+
+{% endblock praweGlowne %}

@@ -1,0 +1,66 @@
+{% extends 'base/main.html' %} {% block praweGlowne %}
+
+<div class="box-update-task">
+  <span></span>
+
+  <div class="box-update-task-main-content">
+    <div class="box-update-task-go-back">
+      <div><a href="{% url 'index' %}"> Powrót </a></div>
+    </div>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-update-task-main-left-right">
+        <div class="box-update-task-left-side">
+          <div class="lg1">{{task}}</div>
+          <div class="lg2">Data zakupu:</div>
+          <div class="lg2">Ilość sztuk:</div>
+          <div class="lg2">Cena zakupu:</div>
+        </div>
+
+        <div class="box-update-task-right-side">
+          <div class="pg1">Dodaj szczegóły:</div>
+          <div class="pg2">{{form.dataZakupu}}</div>
+          <div class="pg2">{{form.iloscZakupu}}</div>
+          <div class="pg2">{{form.cenaZakupu}}</div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Update task"
+        value="Potwierdź dodanie"
+        class="box-update-task-confirm-button"
+      />
+    </form>
+  </div>
+</div>
+
+{% comment %} Mobile version {% endcomment %}
+<div class="box-update-task-mobile">
+  <span></span>
+
+  <div class="box-update-task-mobile-main-content">
+    <div class="box-update-task-mobile-go-back">
+      <div><a href="{% url 'index' %}"> Powrót </a></div>
+    </div>
+
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="box-update-task-mobile-main-left-right">
+        <div class="box-update-task-mobile-left-side">
+          <div class="b-u-t-m-lg1">{{task}}</div>
+          <div class="b-u-t-m-lg2">Dodaj szczegóły:</div>
+          <div class="b-u-t-m-pg2">Data zakupu: <br />{{form.dataZakupu}}</div>
+          <div class="b-u-t-m-pg2">Ilość sztuk:<br />{{form.iloscZakupu}}</div>
+          <div class="b-u-t-m-pg2">Cena zakupu:<br />{{form.cenaZakupu}}</div>
+        </div>
+      </div>
+      <input
+        type="submit"
+        name="Ppdate task"
+        value="Potwierdź dodanie"
+        class="box-update-task-mobile-confirm-button"
+      />
+    </form>
+  </div>
+</div>
+{% endblock praweGlowne %}
