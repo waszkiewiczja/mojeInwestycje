@@ -884,10 +884,10 @@ if (toggleInputZysk != null) {
 const rodInwestycji = document.querySelectorAll(".lewy11");
 const nazInwestycji = document.querySelectorAll(".lewy1");
 const obecnyKursInwestycji = document.querySelectorAll(".prawy1");
-// const obecnaZmianaInwestycji = document.querySelectorAll(".prawy2");
-// const obecnaZmianaProcentowaInwestycji = document.querySelectorAll(".lewy2");
 
 for (let i = 0; i < nazInwestycji.length; i++) {
+  //
+  // Złoto
   if (rodInwestycji[i].innerText === "Złoto") {
     let indexTemp = bazaZloto.indexOf(nazInwestycji[i].innerText);
     if (indexTemp === 0 || indexTemp === 1 || indexTemp === 2) {
@@ -938,66 +938,9 @@ for (let i = 0; i < nazInwestycji.length; i++) {
       };
       req.send();
     }
-  }
-  //
-  // else if (rodInwestycji[i].innerText === "Akcje") {
-  //   let indexTemp = bazaAkcji.indexOf(nazInwestycji[i].innerText);
-
-  //   //Pobieranie Excel
-  //   let url = "/static/base/data/akcje.xlsx";
-  //   let req = new XMLHttpRequest();
-  //   req.open("GET", url, true);
-  //   req.responseType = "arraybuffer";
-  //   req.onload = function (e) {
-  //     let data = new Uint8Array(req.response);
-  //     let workbook = XLSX.read(data, { type: "array" });
-  //     let first_sheet_name = workbook.SheetNames[0];
-  //     let worksheet = workbook.Sheets[first_sheet_name];
-  //     obecnyKursInwestycji[i].innerText = `${XLSX.utils
-  //       .sheet_to_json(worksheet)
-  //       [indexTemp].Kurs.slice(0, -2)} zł`;
-  //     //   cdprojekt.innerText = `${XLSX.utils
-  //     //     .sheet_to_json(worksheet)[75]
-  //     //     .Kurs.slice(0, -2)} zł`;
-
-  //     if (
-  //       Number(
-  //         XLSX.utils
-  //           .sheet_to_json(worksheet)
-  //           [indexTemp].Zmiana.split(",")
-  //           .join(".")
-  //       ) >= 0
-  //     ) {
-  //       // obecnaZmianaInwestycji[i].innerText = `+ ${XLSX.utils
-  //       //   .sheet_to_json(worksheet)
-  //       //   [indexTemp].Zmiana.slice(0, -2)} zł`;
-  //       // obecnaZmianaProcentowaInwestycji[i].innerText = `+ ${XLSX.utils
-  //       //   .sheet_to_json(worksheet)
-  //       //   [indexTemp].ZmianaProcentowa.slice(0, -2)} % `;
-  //       // obecnaZmianaInwestycji[i].classList.add("kurswzrost");
-  //       // obecnaZmianaProcentowaInwestycji[i].classList.add("kurswzrost");
-  //     } else if (
-  //       Number(
-  //         XLSX.utils
-  //           .sheet_to_json(worksheet)
-  //           [indexTemp].Zmiana.split(",")
-  //           .join(".")
-  //       ) < 0
-  //     ) {
-  //       // obecnaZmianaInwestycji[i].innerText = `${XLSX.utils
-  //       //   .sheet_to_json(worksheet)
-  //       //   [indexTemp].Zmiana.slice(0, -2)} zł`;
-  //       // obecnaZmianaProcentowaInwestycji[i].innerText = `${XLSX.utils
-  //       //   .sheet_to_json(worksheet)
-  //       //   [indexTemp].ZmianaProcentowa.slice(0, -2)} % `;
-  //       // obecnaZmianaInwestycji[i].classList.add("kursspadek");
-  //       // obecnaZmianaProcentowaInwestycji[i].classList.add("kursspadek");
-  //     }
-  //   };
-  //   req.send();
-  // }
-  //
-  else if (rodInwestycji[i].innerText === "Waluty") {
+    //
+    //Waluty
+  } else if (rodInwestycji[i].innerText === "Waluty") {
     let indexTemp = bazaWaluty.indexOf(nazInwestycji[i].innerText);
 
     fetch(`https://api.nbp.pl/api/exchangerates/tables/A/`)
@@ -1009,24 +952,31 @@ for (let i = 0; i < nazInwestycji.length; i++) {
           indexTemp
         ].mid.toFixed(2)} zł`;
       });
-  }
+    //
+    //Kryptowaluty
+  } else if (rodInwestycji[i].innerText === "Kryptowaluty") {
+    let number = i;
+    let indexTemp = bazaKryptowalut.indexOf(nazInwestycji[i].innerText);
 
-  //
-  //   else if (rodInwestycji[i].innerText === "Kryptowaluty") {
-  //     const proxy = `https://cors-anywhere.herokuapp.com/`;
-  //     const apiKryptowaluty = `${proxy}https://bitbay.net/API/Public/${nazInwestycji[i].innerText}PLN/orderbook.json`;
+    const options = {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    };
 
-  //     fetch(apiKryptowaluty)
-  //       .then((response) => {
-  //         return response.json();
-  //       })
-  //       .then((dane) => {
-  //         obecnyKursInwestycji[i].innerText = `${dane.asks[0][0]} zł`;
-  //       });
-  //   }
-
-  //
-  else if (rodInwestycji[i].innerText === "TOP 100 USA") {
+    fetch(
+      `https://api.zonda.exchange/rest/trading/ticker/${bazaKryptowalut[indexTemp]}-PLN`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        obecnyKursInwestycji[
+          number
+        ].innerText = `${response.ticker.rate.replace(".", ",")} zł`;
+      })
+      .catch((err) => console.error(err));
+    //
+    // TOP 100 USA
+  } else if (rodInwestycji[i].innerText === "TOP 100 USA") {
     let number = i;
     let wybrana_akcja = nazInwestycji[i].innerText;
     for (let i = 0; i < bazaTopusa.length; i++) {
@@ -1039,12 +989,20 @@ for (let i = 0; i < nazInwestycji.length; i++) {
               return response.json();
             })
             .then((dane) => {
-              obecnyKursInwestycji[number].innerText = `${dane.close
-                .toString()
-                .replace(".", ",")} $`;
+              if (dane.iexRealtimePrice == null) {
+                obecnyKursInwestycji[number].innerText = `${dane.iexClose
+                  .toString()
+                  .replace(".", ",")} $`;
+              } else {
+                obecnyKursInwestycji[
+                  number
+                ].innerText = `${dane.iexRealtimePrice
+                  .toString()
+                  .replace(".", ",")} $`;
+              }
             });
         } catch {
-          console.log("fetch error js");
+          console.log("fetch error usa");
         }
       }
     }
@@ -1099,110 +1057,6 @@ try {
 } catch {
   console.log("fetch error nbp");
 }
-// try {
-//   if (cdprojekt) {
-//     //Pobieranie Excel
-//     let url = "/static/base/data/akcje.xlsx";
-//     let req = new XMLHttpRequest();
-//     req.open("GET", url, true);
-//     req.responseType = "arraybuffer";
-//     req.onload = function (e) {
-//       let data = new Uint8Array(req.response);
-//       let workbook = XLSX.read(data, { type: "array" });
-//       let first_sheet_name = workbook.SheetNames[0];
-//       let worksheet = workbook.Sheets[first_sheet_name];
-
-//       cdprojekt.innerText = `${XLSX.utils
-//         .sheet_to_json(worksheet)[75]
-//         .Kurs.slice(0, -2)} zł`;
-
-//       if (
-//         Number(
-//           XLSX.utils.sheet_to_json(worksheet)[75].Zmiana.split(",").join(".")
-//         ) >= 0
-//       ) {
-//         // cdprojekt.classList.add("kurswzrost");
-//       } else if (
-//         Number(
-//           XLSX.utils.sheet_to_json(worksheet)[75].Zmiana.split(",").join(".")
-//         ) < 0
-//       ) {
-//         // cdprojekt.classList.add("kursspadek");
-//       }
-//     };
-//     req.send();
-//   }
-// } catch {
-//   //fetch error
-// }
-
-//Tesla API
-// try {
-//   if (tesla) {
-//     fetch(
-//       "https://cloud.iexapis.com/stable/stock/tsla/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8"
-//     )
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then((dane) => {
-//         tesla.innerHTML = `${dane.close.toString().replace(".", ",")} $`;
-//       });
-//   }
-// } catch {
-//   console.log("fetch error");
-// }
-
-//Amazon API
-// try {
-//   if (amazon) {
-//     fetch(
-//       "https://cloud.iexapis.com/stable/stock/amzn/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8"
-//     )
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then((dane) => {
-//         amazon.innerHTML = `${dane.close.toString().replace(".", ",")} $`;
-//       });
-//   }
-// } catch {
-//   console.log("fetch error");
-// }
-
-//Netflix API
-// try {
-//   if (netflix) {
-//     fetch(
-//       "https://cloud.iexapis.com/stable/stock/nflx/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8"
-//     )
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then((dane) => {
-//         netflix.innerHTML = `${dane.close.toString().replace(".", ",")} $`;
-//       });
-//   }
-// } catch {
-//   console.log("fetch error");
-// }
-
-//SP500 API
-// try {
-//   if (sp500) {
-//     fetch(
-//       "https://cloud.iexapis.com/stable/stock/spy/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8"
-//     )
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then((dane) => {
-//         sp500.innerHTML = `${dane.close.toString().replace(".", ",")} $`;
-//       });
-//   }
-// } catch {
-//   console.log("fetch error");
-// }
 
 //BITCOIN API
 try {
@@ -1215,19 +1069,9 @@ try {
     fetch("https://api.zonda.exchange/rest/trading/ticker/BTC-PLN", options)
       .then((response) => response.json())
       .then((response) => {
-        bitcoin.innerHTML = `${response.ticker.rate} zł`;
+        bitcoin.innerHTML = `${response.ticker.rate.replace(".", ",")} zł`;
       })
       .catch((err) => console.error(err));
-
-    // fetch(
-    //   "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=PLN"
-    // )
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((dane) => {
-    //     bitcoin.innerHTML = `${dane.bitcoin.pln.toString()} zł`;
-    //   });
   }
 } catch {
   console.log("fetch error bitcoin");
@@ -1496,9 +1340,15 @@ const get_anonimo = () => {
                   return response.json();
                 })
                 .then((dane) => {
-                  div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${dane.close
-                    .toString()
-                    .replace(".", ",")} $`;
+                  if (dane.iexRealtimePrice == null) {
+                    div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${dane.iexClose
+                      .toString()
+                      .replace(".", ",")} $`;
+                  } else {
+                    div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${dane.iexRealtimePrice
+                      .toString()
+                      .replace(".", ",")} $`;
+                  }
                 });
             } catch {
               console.log("fetch error usa");
@@ -1513,7 +1363,6 @@ const get_anonimo = () => {
     // Usuwanie karty
     praweGlowne.addEventListener("click", function (e) {
       if (e.target.classList[0] === "przyciskUsun2") {
-        console.log(e.target.parentNode);
         e.target.parentNode.remove();
       }
     });
