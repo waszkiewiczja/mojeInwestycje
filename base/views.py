@@ -247,13 +247,13 @@ async def testAB(request):
 			actions.append(asyncio.ensure_future(get_akcje(session, url)))
 
 		action_res = await asyncio.gather(*actions)
-		for action in action_res:
+		for index, action in enumerate(action_res):
 			if action["iexRealtimePrice"] is None:
 				akcje_cena.append(str(action["iexClose"]).replace(".", ","))
-				add_action = await sync_to_async(UsaStock.objects.update_or_create, thread_sensitive=True)(name=action['companyName'], price = str(action["iexClose"]).replace(".", ","))
+				add_action = await sync_to_async(UsaStock.objects.update_or_create, thread_sensitive=True)(name=akcje[index], price = str(action["iexClose"]).replace(".", ","))
 			else:
 				akcje_cena.append(str(action["iexRealtimePrice"]).replace(".", ","))
-				add_action = await sync_to_async(UsaStock.objects.update_or_create, thread_sensitive=True)(name=action['companyName'], price = str(action["iexRealtimePrice"]).replace(".", ","))
+				add_action = await sync_to_async(UsaStock.objects.update_or_create, thread_sensitive=True)(name=akcje[index], price = str(action["iexRealtimePrice"]).replace(".", ","))
 
 	return render(request, 'base/testab.html', {"akcje_cena":akcje_cena} )
 
@@ -265,14 +265,17 @@ def notowania(request):
 
 	# Akcje
 	def pobierz_akcje():
-		headers = [{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'}, 
-			{'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11'}, 
-			{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51'}, ]
-		los = randint(0, 2)
+		# headers = [{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'}, 
+		# 	{'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11'}, 
+		# 	{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51'}, ]
+		# los = randint(0, 2)
 
-		url = 'https://www.bankier.pl/gielda/notowania/akcje_kod/'
+		headers = {"Accept-Language" : "en-US,en;q=0.5", "User-Agent": "Defined", }
 
-		r = requests.get(url, headers=headers[los])
+		url = 'https://www.bankier.pl/gielda/notowania/akcje'
+
+		# r = requests.get(url, headers=headers[los])
+		r = requests.get(url, headers=headers)
 		soup = bs(r.text, 'html.parser')
 		all_stocks = []
 

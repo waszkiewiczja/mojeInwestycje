@@ -1,0 +1,1 @@
+web: gunicorn get_price_project.wsgi --log-file -

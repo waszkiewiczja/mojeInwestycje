@@ -62,3 +62,17 @@ const bazaKryptowalut = [
 
   "USDC",
 ];
+
+const bazaKryptowalutCoingecko = [
+  "Bitcoin",
+  "Ethereum",
+  "BinanceCoin",
+  "Tether",
+  "Cardano",
+  "USDCoin",
+  "Solana",
+  "XRP",
+  "Terra",
+  "Polkadot",
+  "Dogecoin",
+];

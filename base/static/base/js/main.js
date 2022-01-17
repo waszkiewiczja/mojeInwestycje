@@ -1382,10 +1382,26 @@ const get_anonimo = () => {
           });
 
         //
-        //Kryptowaluty
+        // Kryptowaluty;
+        // } else if (anonimoSelected2 === "Kryptowaluty") {
+        //   const proxy = `https://cors-anywhere.herokuapp.com/`;
+        //   const apiKryptowaluty = `${proxy}https://bitbay.net/API/Public/${anonimoSelected}PLN/orderbook.json`;
+
+        //   fetch(apiKryptowaluty)
+        //     .then((response) => {
+        //       return response.json();
+        //     })
+        //     .then((dane) => {
+        //       for (let i = 0; i < 1; i++) {
+        //         div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${dane.asks[0][0]
+        //           .toFixed(2)
+        //           .replace(".", ",")} zł`;
+        //       }
+        //     });
+
+        // Kryptowaluty;
       } else if (anonimoSelected2 === "Kryptowaluty") {
-        const proxy = `https://cors-anywhere.herokuapp.com/`;
-        const apiKryptowaluty = `${proxy}https://bitbay.net/API/Public/${anonimoSelected}PLN/orderbook.json`;
+        const apiKryptowaluty = `https://bitbay.net/API/Public/${anonimoSelected}PLN/orderbook.json`;
 
         fetch(apiKryptowaluty)
           .then((response) => {
