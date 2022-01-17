@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-3tm6-nuaf6*9orqik6yjf
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['moje-finanse.herokuapp.com', 'localhost', '127.0.0.1', 'herokuapp.com']
 
