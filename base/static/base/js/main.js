@@ -1207,15 +1207,27 @@ try {
 //BITCOIN API
 try {
   if (bitcoin) {
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=PLN"
-    )
+    const options = {
+      method: "GET",
+      headers: { Accept: "application/json" },
+    };
+
+    fetch("https://api.zonda.exchange/rest/trading/ticker/BTC-PLN", options)
+      .then((response) => response.json())
       .then((response) => {
-        return response.json();
+        bitcoin.innerHTML = `${response.ticker.rate} zł`;
       })
-      .then((dane) => {
-        bitcoin.innerHTML = `${dane.bitcoin.pln.toString()} zł`;
-      });
+      .catch((err) => console.error(err));
+
+    // fetch(
+    //   "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=PLN"
+    // )
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((dane) => {
+    //     bitcoin.innerHTML = `${dane.bitcoin.pln.toString()} zł`;
+    //   });
   }
 } catch {
   console.log("fetch error bitcoin");
@@ -1350,7 +1362,8 @@ const get_anonimo = () => {
         //
         // Akcje
       } else if (anonimoSelected2 === "Akcje") {
-        const apiIndeksy = `http://127.0.0.1:8000/api/akcje/`;
+        // const apiIndeksy = `http://127.0.0.1:8000/api/akcje/`;
+        const apiIndeksy = `https://moje-finanse.herokuapp.com/api/akcje/`;
         fetch(apiIndeksy)
           .then((response) => {
             return response.json();
@@ -1400,25 +1413,41 @@ const get_anonimo = () => {
         //     });
 
         // Kryptowaluty;
-      } else if (anonimoSelected2 === "Kryptowaluty") {
-        const apiKryptowaluty = `https://bitbay.net/API/Public/${anonimoSelected}PLN/orderbook.json`;
+        // } else if (anonimoSelected2 === "Kryptowaluty") {
+        //   const apiKryptowaluty = `https://bitbay.net/API/Public/${anonimoSelected}PLN/orderbook.json`;
 
-        fetch(apiKryptowaluty)
+        //   fetch(apiKryptowaluty)
+        //     .then((response) => {
+        //       return response.json();
+        //     })
+        //     .then((dane) => {
+        //       for (let i = 0; i < 1; i++) {
+        //         div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${dane.asks[0][0]
+        //           .toFixed(2)
+        //           .replace(".", ",")} zł`;
+        //       }
+        //     });
+      } else if (anonimoSelected2 === "Kryptowaluty") {
+        const options = {
+          method: "GET",
+          headers: { Accept: "application/json" },
+        };
+
+        fetch(
+          `https://api.zonda.exchange/rest/trading/ticker/${anonimoSelected}-PLN`,
+          options
+        )
+          .then((response) => response.json())
           .then((response) => {
-            return response.json();
+            div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${response.ticker.rate} zł`;
           })
-          .then((dane) => {
-            for (let i = 0; i < 1; i++) {
-              div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${dane.asks[0][0]
-                .toFixed(2)
-                .replace(".", ",")} zł`;
-            }
-          });
+          .catch((err) => console.error(err));
 
         //
         //Indeksy
       } else if (anonimoSelected2 === "Indeksy") {
-        const apiIndeksy = `http://127.0.0.1:8000/api/indeksy/`;
+        // const apiIndeksy = `http://127.0.0.1:8000/api/indeksy/`;
+        const apiIndeksy = `https://moje-finanse.herokuapp.com/api/indeksy/`;
         fetch(apiIndeksy)
           .then((response) => {
             return response.json();
@@ -1433,7 +1462,8 @@ const get_anonimo = () => {
         //
         //New connect
       } else if (anonimoSelected2 === "New Connect") {
-        const apiIndeksy = `http://127.0.0.1:8000/api/newconnect/`;
+        // const apiIndeksy = `http://127.0.0.1:8000/api/newconnect/`;
+        const apiIndeksy = `https://moje-finanse.herokuapp.com/api/newconnect/`;
         fetch(apiIndeksy)
           .then((response) => {
             return response.json();
