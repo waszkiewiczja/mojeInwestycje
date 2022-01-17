@@ -1439,7 +1439,10 @@ const get_anonimo = () => {
         )
           .then((response) => response.json())
           .then((response) => {
-            div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${response.ticker.rate} zł`;
+            div.childNodes[5].childNodes[1].childNodes[3].childNodes[1].innerHTML = `${response.ticker.rate.replace(
+              ".",
+              ","
+            )} zł`;
           })
           .catch((err) => console.error(err));
 
