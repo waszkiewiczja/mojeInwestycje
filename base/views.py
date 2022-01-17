@@ -226,7 +226,7 @@ def deleteTask(request, slug_text):
 # 	return JsonResponse(data, safe=False)
 
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 
 async def get_akcje(session, url):
 	async with session.get(url) as res:
