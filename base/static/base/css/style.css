@@ -323,7 +323,7 @@ body {
 
 /* Przycisk "Potwierdzenie dodania inwestycji" */
 .btn-investment-confirmation {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: black;
   background: rgba(255, 255, 255, 1);
   padding: 1rem 3rem;
