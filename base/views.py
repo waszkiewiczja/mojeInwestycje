@@ -34,6 +34,10 @@ def registerPage(request):
 	if request.user.is_authenticated:
 		return redirect('index')
 	else:
+		tesla = UsaStock.objects.get(name='tesla')
+		amazon = UsaStock.objects.get(name='amazon')
+		netflix = UsaStock.objects.get(name='netflix')
+		sp500 = UsaStock.objects.get(name='sp500')
 		get_cdprojekt = StockPrice.objects.get(name="CDPROJEKT")
 		cdprojekt = str(get_cdprojekt.price).replace(".", ",")
 		get_wig20 = IndeksPrice.objects.get(name="WIG20")
@@ -48,16 +52,17 @@ def registerPage(request):
 				email = form.cleaned_data.get('email')
 				messages.success(request, 'Stworzono' + user)
 
-				send_mail(
-					'Witaj w inw',
-					'Konto zostało założone.',
-					settings.EMAIL_HOST_USER,
-					[email],
-					fail_silently=False,
-				)
+				# send_mail(
+				# 	'Witaj w moje-finanse.pl, ',
+				# 	'Twoje konto zostało założone.',
+				# 	'www.mojefinanse.pl',
+				# 	settings.EMAIL_HOST_USER,
+				# 	[email],
+				# 	fail_silently=False,
+				# )
 
 				username = request.POST.get('username')
-				password = request.POST.get('password')
+				password = request.POST.get('password1')
 				user = authenticate(request, username=username, password=password)
 
 				if user is not None:
@@ -65,7 +70,7 @@ def registerPage(request):
 					return redirect('index')
 
 				return redirect ('login')
-		context = {'form':form, "cdprojekt":cdprojekt,"wig20":wig20,}
+		context = {'form':form, "cdprojekt":cdprojekt, "wig20":wig20, "tesla":tesla, "amazon":amazon, "netflix":netflix, "sp500":sp500}
 		return render(request, 'base/register.html', context)
 
 
@@ -73,6 +78,10 @@ def loginPage(request):
 	if request.user.is_authenticated:
 		return redirect('index')
 	else:
+		tesla = UsaStock.objects.get(name='tesla')
+		amazon = UsaStock.objects.get(name='amazon')
+		netflix = UsaStock.objects.get(name='netflix')
+		sp500 = UsaStock.objects.get(name='sp500')
 		get_cdprojekt = StockPrice.objects.get(name="CDPROJEKT")
 		cdprojekt = str(get_cdprojekt.price).replace(".", ",")
 		get_wig20 = IndeksPrice.objects.get(name="WIG20")
@@ -88,7 +97,7 @@ def loginPage(request):
 				return redirect('index')
 			else:
 				messages.info(request, 'Haslo bledne')
-		context = {"cdprojekt":cdprojekt, "wig20":wig20,}
+		context = {"cdprojekt":cdprojekt, "wig20":wig20, "tesla":tesla, "amazon":amazon, "netflix":netflix, "sp500":sp500}
 		return render(request, 'base/login.html', context)
 
 

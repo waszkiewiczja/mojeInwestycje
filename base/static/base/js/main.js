@@ -1149,7 +1149,7 @@ const get_anonimo = () => {
       //
       //
       // Dodawanie kursu
-      console.log(anonimoSelected2);
+      // console.log(anonimoSelected2);
       if (anonimoSelected2 === "Złoto") {
         let indexTemp = bazaZloto.indexOf(anonimoSelected);
         if (indexTemp === 0 || indexTemp === 1 || indexTemp === 2) {
