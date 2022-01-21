@@ -2057,6 +2057,11 @@ mobile menu */
   .najpopularniejszemobile {
     display: block;
     font-size: 1.5rem;
+    color: aliceblue;
+  }
+
+  .najpopularniejszemobile a {
+    color: aliceblue;
   }
 
   .witaj {
