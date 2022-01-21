@@ -1208,7 +1208,7 @@ const get_anonimo = () => {
         // Akcje
       } else if (anonimoSelected2 === "Akcje") {
         // const apiIndeksy = `http://127.0.0.1:8000/api/akcje/`;
-        const apiIndeksy = `https://moje-finanse.herokuapp.com/api/akcje/`;
+        const apiIndeksy = `https://moje-finanse.pl/api/akcje/`;
         fetch(apiIndeksy)
           .then((response) => {
             return response.json();
@@ -1295,7 +1295,7 @@ const get_anonimo = () => {
         //Indeksy
       } else if (anonimoSelected2 === "Indeksy") {
         // const apiIndeksy = `http://127.0.0.1:8000/api/indeksy/`;
-        const apiIndeksy = `https://moje-finanse.herokuapp.com/api/indeksy/`;
+        const apiIndeksy = `https://moje-finanse.pl/api/indeksy/`;
         fetch(apiIndeksy)
           .then((response) => {
             return response.json();
@@ -1311,7 +1311,7 @@ const get_anonimo = () => {
         //New connect
       } else if (anonimoSelected2 === "New Connect") {
         // const apiIndeksy = `http://127.0.0.1:8000/api/newconnect/`;
-        const apiIndeksy = `https://moje-finanse.herokuapp.com/api/newconnect/`;
+        const apiIndeksy = `https://moje-finanse.pl/api/newconnect/`;
         fetch(apiIndeksy)
           .then((response) => {
             return response.json();
