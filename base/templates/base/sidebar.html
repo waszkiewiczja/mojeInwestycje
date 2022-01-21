@@ -15,9 +15,11 @@
     </div>
     {% else %}
     <div class="witaj">
+      {% comment %}
       <div>
         <a href="{% url 'index' %}">Strona główna</a>
       </div>
+      {% endcomment %}
       <div>
         <a href="{% url 'login' %}">Zaloguj</a>
       </div>
