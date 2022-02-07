@@ -982,7 +982,7 @@ for (let i = 0; i < nazInwestycji.length; i++) {
       if (wybrana_akcja.toLowerCase() === bazaTopusa[i].toLocaleLowerCase()) {
         try {
           fetch(
-            `https://cloud.iexapis.com/stable/stock/${bazaTopusaKod[i]}/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8`
+            `https://cloud.iexapis.com/stable/stock/${bazaTopusaKod[i]}/quote?token=`
           )
             .then((response) => {
               return response.json();
@@ -1335,7 +1335,7 @@ const get_anonimo = () => {
           ) {
             try {
               fetch(
-                `https://cloud.iexapis.com/stable/stock/${bazaTopusaKod[i]}/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8`
+                `https://cloud.iexapis.com/stable/stock/${bazaTopusaKod[i]}/quote?token=`
               )
                 .then((response) => {
                   return response.json();

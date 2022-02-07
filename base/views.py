@@ -55,7 +55,7 @@ def registerPage(request):
 				# send_mail(
 				# 	'Witaj w moje-finanse.pl, ',
 				# 	'Twoje konto zostało założone.',
-				# 	'www.mojefinanse.pl',
+				# 	'www.moje-finanse.pl',
 				# 	settings.EMAIL_HOST_USER,
 				# 	[email],
 				# 	fail_silently=False,
@@ -170,13 +170,6 @@ def index(request):
 	netflix = UsaStock.objects.get(name='netflix')
 	sp500 = UsaStock.objects.get(name='sp500')
 
-	# Jak łączyć Django z API:
-	# try:
-	# 	tesla_r = requests.get('https://cloud.iexapis.com/stable/stock/tsla/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8')
-	# 	tesla = str(tesla_r.json()["close"]).replace(".", ",")
-	# except:
-	# 	print("fetch error")
-
 	context = {'tasks':tasks, 'form':form, 'anonimo':anonimo, 
 		"cdprojekt":cdprojekt, "wig20":wig20, "tesla":tesla, "amazon":amazon, "netflix":netflix, "sp500":sp500}
 
@@ -219,24 +212,6 @@ def deleteTask(request, slug_text):
 	return render(request, 'base/delete.html', context)
 
 
-# def testAB(request):
-# 	data = list(IndeksPrice.objects.values())
-	
-# 	test = [{"id": 1, "name": "WIG30", "price": "2\u00a0696,50"}, {"id": 2, "name": "WIG20", "price": "2\u00a0194,37"}, ]
-# 	print(test)
-# 	for stock in test:
-# 		p, created = TestCopy.objects.update_or_create(
-# 			name=stock['name'],
-# 			defaults={'price': stock['price']},
-# 		)
-# 		print("p: ", p)
-# 		print("created", created)
-
-# 	return JsonResponse(data, safe=False)
-
-
-
-
 async def get_akcje(session, url):
 	async with session.get(url) as res:
 		data = await res.json()
@@ -252,7 +227,7 @@ async def testAB(request):
 	async with aiohttp.ClientSession() as session:
 
 		for akcja in akcje_kod:
-			url = f'https://cloud.iexapis.com/stable/stock/{akcja}/quote?token=pk_b1da4aa5fd714d3db22ee5db45d173c8'
+			url = f'https://cloud.iexapis.com/stable/stock/{akcja}/quote?token='
 			actions.append(asyncio.ensure_future(get_akcje(session, url)))
 
 		action_res = await asyncio.gather(*actions)
@@ -266,128 +241,3 @@ async def testAB(request):
 
 	return render(request, 'base/testab.html', {"akcje_cena":akcje_cena} )
 
-
-def notowania(request):
-
-	start_time = time.time()
-	print('Start timer')
-
-	# Akcje
-	def pobierz_akcje():
-		# headers = [{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'}, 
-		# 	{'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11'}, 
-		# 	{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51'}, ]
-		# los = randint(0, 2)
-
-		headers = {"Accept-Language" : "en-US,en;q=0.5", "User-Agent": "Defined", }
-
-		url = 'https://www.bankier.pl/gielda/notowania/akcje'
-
-		# r = requests.get(url, headers=headers[los])
-		r = requests.get(url, headers=headers)
-		soup = bs(r.text, 'html.parser')
-		all_stocks = []
-
-		money_table = soup.find('table', class_ = 'sortTable floatingHeaderTable')
-		for money in money_table.find_all('tbody'):
-			rows = money.find_all('tr')
-			for row in rows:
-				try:
-					company = row.find('td', class_ = 'colWalor').text.strip()
-					price = row.find('td', class_ = 'colKurs').text.strip()
-					stock = {
-						'name':company,
-						'price':float(price[0:-2].replace(",",".")),
-					}
-					all_stocks.append(stock)
-
-				except:
-					pass
-
-		for stock in all_stocks:
-			p, created = StockPrice.objects.update_or_create(
-				name=stock['name'],
-				defaults={'price': stock['price']},
-			)
-	pobierz_akcje()
-
-
-	# Indeksy
-	def pobierz_indeksy():
-		headers = [{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'}, 
-			{'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11'}, 
-			{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51'}, ]
-		los = randint(0, 2)	
-
-		url = 'https://www.bankier.pl/gielda/notowania/indeksy-gpw'
-
-		r = requests.get(url, headers=headers[los])
-		soup = bs(r.text, 'html.parser')
-		all_indeksy = []
-
-		indeksy_table = soup.find('table', class_ = 'sortTable floatingHeaderTable')
-		for indeks in indeksy_table.find_all('tbody'):
-			rows = indeks.find_all('tr')
-			for row in rows:
-				try:
-					company = row.find('td', class_ = 'colWalor').text.strip()
-					price = row.find('td', class_ = 'colKurs').text
-					indeks = {
-						'name':company,
-						'price':price,
-					}
-					all_indeksy.append(indeks)
-
-				except:
-					pass
-
-		for indeks in all_indeksy:
-			p, created = IndeksPrice.objects.update_or_create(
-				name=indeks['name'],
-				defaults={'price': indeks['price']},
-			)
-	pobierz_indeksy()
-
-
-	# New Connect 
-	def pobierz_new_connect():
-		headers = [{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'}, 
-			{'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11'}, 
-			{'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51'}, ]
-		los = randint(0, 2)	
-
-		url = 'https://www.bankier.pl/gielda/notowania/new-connect'
-
-		r = requests.get(url, headers=headers[los])
-		soup = bs(r.text, 'html.parser')
-		all_newconnects = []
-
-		newconnects_table = soup.find('table', class_ = 'sortTable floatingHeaderTable')
-		for indeks in newconnects_table.find_all('tbody'):
-			rows = indeks.find_all('tr')
-			for row in rows:
-				try:
-					company = row.find('td', class_ = 'colWalor').text.strip()
-					price = row.find('td', class_ = 'colKurs').text.strip()
-					indeks = {
-						'name':company,
-						'price':float(price[0:-2].replace(",",".")),
-					}
-					all_newconnects.append(indeks)
-
-				except:
-					pass
-
-		for indeks in all_newconnects:
-			p, created = NewconnectPrice.objects.update_or_create(
-				name=indeks['name'],
-				defaults={'price': indeks['price']},
-			)
-	pobierz_new_connect()
-
-	context = {}
-
-	total_time = time.time() - start_time
-	print('Total time', total_time)
-
-	return render(request, 'base/notowania.html', context)
